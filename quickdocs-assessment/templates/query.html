@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>AI Query Interface</h2>
+  <form method="post">
+    <div class="form-group">
+      <label>Ask a question:</label>
+      <input type="text" name="query" class="form-control" value="{{ nl_query or '' }}" required>
+      <small class="form-text text-muted">
+        e.g., "Show all customers", "How many documents has Rajesh Sharma submitted?", "Which customers are assigned to Home Loan Application?"
+      </small>
+    </div>
+    <button type="submit" class="btn btn-primary">Query</button>
+  </form>
+
+  {% if sql_query %}
+    <h4 class="mt-4">Generated SQL</h4>
+    <pre><code>{{ sql_query }}</code></pre>
+  {% endif %}
+
+  {% if results %}
+    <h4 class="mt-4">Results</h4>
+    <table class="table">
+      <thead>
+        <tr>
+          {% for key in results[0].keys() %}
+            <th>{{ key }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in results %}
+          <tr>
+            {% for value in row.values() %}
+              <td>{{ value }}</td>
+            {% endfor %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% elif error %}
+    <div class="alert alert-danger mt-4">{{ error }}</div>
+  {% elif nl_query %}
+    <div class="alert alert-info mt-4">No results found.</div>
+  {% endif %}
+{% endblock %}

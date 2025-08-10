@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Status Dashboard</h2>
+
+  <div class="row mb-4">
+    <div class="col-md-3">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Total Customers</h5>
+          <p class="card-text">{{ stats.total_customers }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Total Processes</h5>
+          <p class="card-text">{{ stats.total_processes }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Completed Assignments</h5>
+          <p class="card-text">{{ stats.completed_assignments }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Pending Submissions</h5>
+          <p class="card-text">{{ stats.pending_submissions }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Customer</th>
+        <th>Process</th>
+        <th>Assignment Date</th>
+        <th>Status</th>
+        <th>Completion</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for assignment in assignments %}
+        <tr>
+          <td>{{ assignment.customer_name }}</td>
+          <td>{{ assignment.process_name }}</td>
+          <td>{{ assignment.assignment_date }}</td>
+          <td>
+            {% if assignment.completion_percentage == 100 %}
+              <span class="badge badge-success">Completed</span>
+            {% elif assignment.completion_percentage > 0 %}
+              <span class="badge badge-warning">In Progress</span>
+            {% else %}
+              <span class="badge badge-danger">Not Started</span>
+            {% endif %}
+          </td>
+          <td>
+            <div class="progress">
+              <div class="progress-bar" style="width: {{ assignment.completion_percentage }}%;">
+                {{ "%.2f"|format(assignment.completion_percentage) }}%
+              </div>
+            </div>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
