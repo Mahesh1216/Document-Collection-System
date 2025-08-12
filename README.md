@@ -43,11 +43,11 @@ Create an env file with Gemini API key and Flask_Secert_Key
     ```
 2.  Initialize the database:
     ```bash
-    flask initdb
+    python -m flask initdb
     ```
 3.  Run the application:
     ```bash
-    flask run
+    python app.py
     ```
 
 ## Pages
