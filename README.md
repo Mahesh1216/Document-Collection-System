@@ -1,6 +1,5 @@
 # QuickDocs Document Management System
-
-This is a technical assessment to build a complete document collection system with an AI query interface for QuickDocs startup.
+building a complete document collection system with an AI query interface for QuickDocs startup.
 
 ## Requirements
 
